@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" alt="Habits App Logo" width="128" height="128">
+  <img src="https://raw.githubusercontent.com/AmoghMK/habits-android-native-app/main/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" alt="Habits App Logo" width="128" height="128">
   
   # Habits
 

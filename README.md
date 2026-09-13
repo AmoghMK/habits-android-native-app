@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/logo.webp" alt="Habits App Logo" width="128" height="128">
+  <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" alt="Habits App Logo" width="128" height="128">
   
   # Habits
 
@@ -21,7 +21,6 @@ Habits is a beautifully designed, privacy-focused Android application that helps
 
 - **🔄 Flexible Intervals**: Set precise reset timers for each habit. The app works on your cadence, not just a standard 24-hour cycle.
 - **🎨 Modern Adaptive UI**: Clean Material Design 3 interface featuring full Light and Dark mode support, custom colored borders, and intuitive layout drop-shadows.
-- **💬 Smart Conversational Dates**: Logs feature intelligent, human-readable date formatting (e.g., `"Today · 4:41 pm"`, `"Yesterday · 4:41 pm"`).
 - **📱 Home Screen Widget**: Stay on track right from your home screen with the fully interactive Glance App Widget. Mark tasks as done without even opening the app.
 - **🛡️ Offline & Private**: 100% offline-first architecture using Room Database. Your data never leaves your device.
 
@@ -52,7 +51,3 @@ To build and run this project locally:
 
 This project uses [Semantic Versioning](http://semver.org/). 
 The current version is **`1.0.0`** (`versionCode 1`), which is the initial stable release candidate prepared for the Google Play Store.
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.

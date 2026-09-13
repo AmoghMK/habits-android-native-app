@@ -49,7 +49,7 @@ To build and run this project locally:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/habits-android.git
+   git clone https://github.com/AmoghMK/habits-android-native-app.git
    ```
 2. Open the project in **Android Studio**.
 3. Sync the project with Gradle files.

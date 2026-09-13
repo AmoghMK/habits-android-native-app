@@ -47,10 +47,7 @@ Habits is built using modern Android development practices:
 
 To build and run this project locally:
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/AmoghMK/habits-android-native-app.git
-   ```
+1. Clone the repository.
 2. Open the project in **Android Studio**.
 3. Sync the project with Gradle files.
 4. Build and run on an emulator or physical device (API 24+ required).

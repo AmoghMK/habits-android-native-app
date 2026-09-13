@@ -317,7 +317,7 @@ fun EmptyState(modifier: Modifier = Modifier, onAddClick: () -> Unit, isActiveTa
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Add something you want to remember.",
+                text = "Add something you want to remember",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

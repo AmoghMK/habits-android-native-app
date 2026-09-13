@@ -20,7 +20,11 @@ fun AddEditHabitScreen(
     habitId: Long?,
     onNavigateBack: () -> Unit
 ) {
-    val habit by if (habitId != null) viewModel.getHabit(habitId).collectAsStateWithLifecycle() else remember { mutableStateOf(null) }
+    val habitFlow = remember(viewModel, habitId) { 
+        if (habitId != null) viewModel.getHabit(habitId) 
+        else kotlinx.coroutines.flow.flowOf(null) 
+    }
+    val habit by habitFlow.collectAsStateWithLifecycle(initialValue = null)
 
     var name by remember(habit) { mutableStateOf(habit?.name ?: "") }
     var icon by remember(habit) { mutableStateOf(habit?.icon ?: "") }
@@ -48,21 +52,33 @@ fun AddEditHabitScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            OutlinedTextField(
-                value = name,
-                onValueChange = { name = it },
-                label = { Text("Habit Name") },
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-                singleLine = true
-            )
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OutlinedTextField(
+                    value = icon,
+                    onValueChange = { 
+                        if (it.length <= 2) {
+                            icon = it
+                        }
+                    },
+                    label = { Text("Emoji") },
+                    modifier = Modifier.width(80.dp),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                )
 
-            OutlinedTextField(
-                value = icon,
-                onValueChange = { icon = it },
-                label = { Text("Icon (Emoji)") },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true
-            )
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Habit Name") },
+                    modifier = Modifier.weight(1f),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                )
+            }
 
             Text("Reset Duration", style = MaterialTheme.typography.titleMedium)
 
@@ -86,8 +102,9 @@ fun AddEditHabitScreen(
                     onExpandedChange = { expanded = it },
                     modifier = Modifier.weight(1.5f)
                 ) {
+                    val displayUnit = unit.name.lowercase().replaceFirstChar { it.uppercase() }
                     OutlinedTextField(
-                        value = unit.name,
+                        value = displayUnit,
                         onValueChange = {},
                         readOnly = true,
                         label = { Text("Unit") },
@@ -100,8 +117,9 @@ fun AddEditHabitScreen(
                         onDismissRequest = { expanded = false }
                     ) {
                         DurationUnit.values().forEach { durationUnit ->
+                            val itemDisplayUnit = durationUnit.name.lowercase().replaceFirstChar { it.uppercase() }
                             DropdownMenuItem(
-                                text = { Text(durationUnit.name) },
+                                text = { Text(itemDisplayUnit) },
                                 onClick = {
                                     unit = durationUnit
                                     expanded = false

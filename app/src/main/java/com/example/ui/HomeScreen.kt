@@ -206,7 +206,7 @@ fun HabitCard(
             width = 1.dp,
             color = if (isPending) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.outlineVariant
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = if (!habit.isActive) 0.dp else 2.dp),
         shape = MaterialTheme.shapes.large
     ) {
         Column(

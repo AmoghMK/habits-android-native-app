@@ -17,6 +17,14 @@
 
 Habits is a beautifully designed, privacy-focused Android application that helps you stay on track through recurring intervals. Instead of rigid daily trackers, Habits allows you to set custom reset timers for each routine, automatically resetting at your cadence.
 
+## 📥 Releases
+
+**Latest Release:** [v1.0.0](https://github.com/AmoghMK/habits-android-native-app/releases/tag/v1.0.0)
+
+You can download the latest version directly to your Android device:
+* 📲 [Download APK (habits-v1.0.0.apk)](https://github.com/AmoghMK/habits-android-native-app/releases/download/v1.0.0/habits-v1.0.0.apk)
+* 📝 [View all Release Notes](https://github.com/AmoghMK/habits-android-native-app/releases)
+
 ## ✨ Features
 
 - **🔄 Flexible Intervals**: Set precise reset timers for each habit. The app works on your cadence, not just a standard 24-hour cycle.
@@ -50,4 +58,3 @@ To build and run this project locally:
 ## 📦 Versioning
 
 This project uses [Semantic Versioning](http://semver.org/). 
-The current version is **`1.0.0`** (`versionCode 1`), which is the initial stable release candidate prepared for the Google Play Store.

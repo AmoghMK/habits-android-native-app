@@ -12,6 +12,7 @@ import com.example.util.AlarmScheduler
 import com.example.util.NotificationHelper
 import com.example.util.TimeUtils
 import com.example.widget.IntervalsWidgetReceiver
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -177,42 +178,20 @@ class HabitViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
     
-    fun getHabit(id: Long): StateFlow<Habit?> {
-        return repository.getHabitById(id).stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000),
-            null
-        )
+    fun getHabit(id: Long): Flow<Habit?> {
+        return repository.getHabitById(id)
     }
 
-    fun getCompletions(habitId: Long): StateFlow<List<HabitCompletion>> {
-        return repository.getCompletionsForHabit(habitId).stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000),
-            emptyList()
-        )
+    fun getCompletions(habitId: Long): Flow<List<HabitCompletion>> {
+        return repository.getCompletionsForHabit(habitId)
     }
     
     init {
         viewModelScope.launch {
-            // Check for sample data on first run
-            val habits = repository.allHabits.first()
-            if (habits.isEmpty()) {
-                val prefs = getApplication<IntervalsApplication>().getSharedPreferences("prefs", Context.MODE_PRIVATE)
-                val isFirstRun = prefs.getBoolean("is_first_run", true)
-                if (isFirstRun) {
-                    val habit = Habit(
-                        name = "Multivitamins",
-                        icon = "💊",
-                        resetAmount = 36,
-                        resetUnit = DurationUnit.HOURS,
-                        lastCompletedAt = null,
-                        nextDueAt = System.currentTimeMillis() - 1000 // due now
-                    )
-                    repository.insertHabit(habit)
-                    prefs.edit().putBoolean("is_first_run", false).apply()
-                    IntervalsWidgetReceiver.update(getApplication())
-                }
+            val prefs = getApplication<IntervalsApplication>().getSharedPreferences("prefs", Context.MODE_PRIVATE)
+            val isFirstRun = prefs.getBoolean("is_first_run", true)
+            if (isFirstRun) {
+                prefs.edit().putBoolean("is_first_run", false).apply()
             }
         }
     }

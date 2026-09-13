@@ -28,8 +28,11 @@ fun HabitDetailsScreen(
     onNavigateBack: () -> Unit,
     onNavigateToEdit: (Long) -> Unit
 ) {
-    val habit by viewModel.getHabit(habitId).collectAsStateWithLifecycle()
-    val completions by viewModel.getCompletions(habitId).collectAsStateWithLifecycle()
+    val habitFlow = remember(viewModel, habitId) { viewModel.getHabit(habitId) }
+    val completionsFlow = remember(viewModel, habitId) { viewModel.getCompletions(habitId) }
+    
+    val habit by habitFlow.collectAsStateWithLifecycle(initialValue = null)
+    val completions by completionsFlow.collectAsStateWithLifecycle(initialValue = emptyList())
     var showDeleteDialog by remember { mutableStateOf(false) }
 
     if (habit == null) {
@@ -72,7 +75,7 @@ fun HabitDetailsScreen(
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = if (!currentHabit.isActive) 0.dp else 2.dp),
                     colors = CardDefaults.cardColors(
                         containerColor = if (!currentHabit.isActive) {
                             MaterialTheme.colorScheme.surface.copy(alpha = 0.5f)

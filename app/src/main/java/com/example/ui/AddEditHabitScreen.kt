@@ -28,8 +28,8 @@ fun AddEditHabitScreen(
 
     var name by remember(habit) { mutableStateOf(habit?.name ?: "") }
     var icon by remember(habit) { mutableStateOf(habit?.icon ?: "") }
-    var amount by remember(habit) { mutableStateOf(habit?.resetAmount?.toString() ?: "36") }
-    var unit by remember(habit) { mutableStateOf(habit?.resetUnit ?: DurationUnit.HOURS) }
+    var amount by remember(habit) { mutableStateOf(habit?.resetAmount?.toString() ?: "1") }
+    var unit by remember(habit) { mutableStateOf(habit?.resetUnit ?: DurationUnit.DAYS) }
 
     var showDialog by remember { mutableStateOf(false) }
 
@@ -60,7 +60,8 @@ fun AddEditHabitScreen(
                 OutlinedTextField(
                     value = icon,
                     onValueChange = { 
-                        if (it.length <= 2) {
+                        // Allow up to 8 chars to support complex emojis with modifiers
+                        if (it.length <= 8) {
                             icon = it
                         }
                     },

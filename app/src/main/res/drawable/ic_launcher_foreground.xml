@@ -1,9 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
-    android:viewportWidth="108"
-    android:viewportHeight="108">
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Hourglass structure -->
     <path
-        android:fillColor="#E8DEF8"
-        android:pathData="M 54,24 c -16.5,0 -30,13.5 -30,30 0,16.5 13.5,30 30,30 7.5,0 14.25,-2.75 19.5,-7.25 l -7,-7 c -3.25,3.25 -7.5,5.25 -12.5,5.25 -11,0 -20,-9 -20,-20 0,-11 9,-20 20,-20 11,0 20,9 20,20 0,6.25 -2.75,11.75 -7.25,15.5 l 9.75,9.75 c 5.75,-6.5 9.75,-15.5 9.75,-25.25 0,-16.5 -13.5,-30 -30,-30 z M 54,34 c 0,0 -5,0 -5,0 l 0,20 l 15,0 l 0,-5 l -10,0 l 0,-15 z"/>
+        android:pathData="M 10,8 L 14,8 C 14,10 13,10.5 12.5,11 C 12.5,13 16,14 16,17 L 8,17 C 8,14 11.5,13 11.5,11 C 11,10.5 10,10 10,8 Z"
+        android:strokeColor="#F8FAFC"
+        android:strokeWidth="1.5"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round" />
+    <!-- Falling Sand Particle -->
+    <path
+        android:pathData="M 12,11.5 v 1"
+        android:strokeColor="#F8FAFC"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round" />
+    <!-- Checkmark inside bottom bulb -->
+    <path
+        android:pathData="M 10.5,14 l 1.5,1.5 l 2.5,-3"
+        android:strokeColor="#10B981"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
 </vector>

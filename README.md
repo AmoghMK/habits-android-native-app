@@ -1,11 +1,16 @@
-<div align="center">
+# Habits
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+A modern, offline-first Android habit tracker designed around recurring tasks with configurable reset timers. 
 
-  <h1>Built with AI Studio</h2>
+## Features
+- **Recurring Intervals**: Set custom reset timers for each habit to automatically reset at your cadence.
+- **Smart Formatting**: Conversational relative dates (e.g., "Today · 4:41 pm") for habit logs.
+- **Homescreen Widget**: Stay on track right from your Android home screen with the interactive Intervals widget.
+- **Adaptive UI**: Clean Material 3 design with full Light and Dark mode support, featuring custom colored borders and intuitive drop-shadows.
 
-  <p>The fastest path from prompt to production with Gemini.</p>
-
-  <a href="https://aistudio.google.com/apps">Start building</a>
-
-</div>
+## Tech Stack
+- **Language**: Kotlin
+- **UI Toolkit**: Jetpack Compose
+- **Local Persistence**: Room Database
+- **Architecture**: MVVM
+- **Widget**: Glance App Widget

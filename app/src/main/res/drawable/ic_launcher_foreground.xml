@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    
+    <!-- Hourglass structure (continuous path with rounded joins) -->
+    <path
+        android:pathData="M 10,8 L 14,8 C 14,10 13,10.5 12.5,11 C 12.5,13 16,14 16,17 L 8,17 C 8,14 11.5,13 11.5,11 C 11,10.5 10,10 10,8 Z"
+        android:strokeColor="#F8FAFC"
+        android:strokeWidth="1.5"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round" />
+        
+    <!-- Falling Sand Particle -->
+    <path
+        android:pathData="M 12,11.5 v 1"
+        android:strokeColor="#F8FAFC"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round" />
+
+    <!-- Checkmark inside bottom bulb -->
+    <path
+        android:pathData="M 10.5,14 l 1.5,1.5 l 2.5,-3"
+        android:strokeColor="#10B981"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>

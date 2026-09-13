@@ -1,0 +1,15 @@
+Branding License
+
+The MIT License found in the `LICENSE` file applies to the source code of this project. However, the following assets and branding elements are strictly NOT licensed under the MIT License and remain proprietary:
+
+- The name "Habits" (when used specifically as the brand name for a habit tracking application derived from this codebase)
+- The application logo/icon (`public/logo.svg` and any Android adaptive icon variants)
+- Any specific visual branding or proprietary assets associated with this project
+
+### Usage Restrictions
+You may not use the branding materials in derivative works, forks, or distributed versions of the software (such as uploading to Google Play or other app stores) without explicit written permission. If you fork the project to distribute your own version, you MUST change the application name, package name, and completely replace the logo and all visual branding with your own assets.
+
+### Permitted Uses
+You may use the branding materials strictly for the following purposes:
+- In forks, tutorials, or documentation directly relating to this project, provided there is a clear link back to the official repository (https://github.com/AmoghMK/habits-android-native-app).
+- Mentioning or referring to the project, provided it does not imply official endorsement or affiliation.

@@ -33,12 +33,14 @@ jobs:
           keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "C=US, O=Android, CN=Android Debug"
 
       - name: Build Debug APK
-        run: gradle assembleDebug
+        run: |
+          gradle assembleDebug --no-daemon
+          mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/habits-${{ github.ref_name }}.apk
 
       - name: Create Release and Upload APK
         uses: softprops/action-gh-release@v2
         with:
-          files: app/build/outputs/apk/debug/app-debug.apk
+          files: app/build/outputs/apk/debug/habits-${{ github.ref_name }}.apk
           name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false

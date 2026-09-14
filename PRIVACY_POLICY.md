@@ -3,7 +3,7 @@
 **Effective Date:** September 13, 2026
 
 ## Overview
-Amogh MK ("we", "our", or "us") respects your privacy. This Privacy Policy explains how the **Habits** Android application handles your data. 
+Amogh Madanayakanahalli Kumar ("we", "our", or "us") respects your privacy. This Privacy Policy explains how the **Habits** Android application handles your data. 
 
 ## Data Collection and Storage
 **We do not collect, transmit, or share any of your personal data.** 

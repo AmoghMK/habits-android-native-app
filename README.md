@@ -56,8 +56,10 @@ To build and run this project locally:
 
 This project uses [Semantic Versioning](http://semver.org/). 
 
-## 📄 License
+## 📄 License & Privacy
 
 This project's source code is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
 
 **Note on Branding:** The app's name, logo, and proprietary branding assets are strictly excluded from the MIT License. See [LICENSE-BRANDING](LICENSE-BRANDING) for details on asset usage restrictions.
+
+**Privacy:** Read our [Privacy Policy](PRIVACY_POLICY.md).

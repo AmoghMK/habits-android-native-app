@@ -19,10 +19,10 @@ Habits is a beautifully designed, privacy-focused Android application that helps
 
 ## 📥 Releases
 
-**Latest Release:** [v1.0.0](https://github.com/AmoghMK/habits-android-native-app/releases/tag/v1.0.0)
+**Latest Release:** [v1.0.1](https://github.com/AmoghMK/habits-android-native-app/releases/tag/v1.0.1)
 
 You can download the latest version directly to your Android device:
-* 📲 [Download APK (habits-v1.0.0.apk)](https://github.com/AmoghMK/habits-android-native-app/releases/download/v1.0.0/habits-v1.0.0.apk)
+* 📲 [Download APK (habits-v1.0.1.apk)](https://github.com/AmoghMK/habits-android-native-app/releases/download/v1.0.1/habits-v1.0.1.apk)
 * 📝 [View all Release Notes](https://github.com/AmoghMK/habits-android-native-app/releases)
 
 ## ✨ Features

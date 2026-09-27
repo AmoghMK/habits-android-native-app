@@ -20,10 +20,10 @@ class AlarmReceiver : BroadcastReceiver() {
             
             CoroutineScope(Dispatchers.IO).launch {
                 val habit = repository.getHabitByIdSync(habitId)
-                if (habit != null) {
+                if (habit != null && habit.isActive) {
                     val now = System.currentTimeMillis()
-                    // Check if it's actually due
-                    if (habit.nextDueAt != null && habit.nextDueAt <= now) {
+                    // Check if it's actually due (with a 2-second grace period for clock tolerance)
+                    if (habit.nextDueAt != null && habit.nextDueAt <= (now + 2000L)) {
                         NotificationHelper(context).showHabitDueNotification(habit)
                     }
                 }

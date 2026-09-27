@@ -185,6 +185,18 @@ class HabitViewModel(application: Application) : AndroidViewModel(application) {
     fun getCompletions(habitId: Long): Flow<List<HabitCompletion>> {
         return repository.getCompletionsForHabit(habitId)
     }
+
+    fun rescheduleAllAlarms() {
+        viewModelScope.launch {
+            val habits = repository.getAllHabitsSync()
+            val now = System.currentTimeMillis()
+            habits.forEach { habit ->
+                if (habit.isActive && habit.nextDueAt != null && habit.nextDueAt > now) {
+                    alarmScheduler.scheduleAlarm(habit.id, habit.nextDueAt)
+                }
+            }
+        }
+    }
     
     init {
         viewModelScope.launch {

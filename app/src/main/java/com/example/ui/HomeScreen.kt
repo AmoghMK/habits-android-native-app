@@ -25,8 +25,20 @@ import com.example.data.Habit
 import java.util.Date
 import java.util.Locale
 
+import androidx.compose.material.icons.filled.Alarm
+import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import android.app.AlarmManager
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import com.example.data.ThemePreference
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -68,6 +80,58 @@ fun HomeScreen(
         }
     }
 
+    val context = LocalContext.current
+    val alarmManager = remember { context.getSystemService(Context.ALARM_SERVICE) as AlarmManager }
+    var canScheduleExact by remember {
+        mutableStateOf(
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                alarmManager.canScheduleExactAlarms()
+            } else {
+                true
+            }
+        )
+    }
+    var isBannerDismissed by rememberSaveable { mutableStateOf(false) }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                val updated = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    alarmManager.canScheduleExactAlarms()
+                } else {
+                    true
+                }
+                if (updated != canScheduleExact) {
+                    canScheduleExact = updated
+                    if (updated) {
+                        viewModel.rescheduleAllAlarms()
+                    }
+                }
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
+    val openExactAlarmSettings: () -> Unit = {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            try {
+                val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+                    data = Uri.parse("package:${context.packageName}")
+                }
+                context.startActivity(intent)
+            } catch (e: Exception) {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.parse("package:${context.packageName}")
+                }
+                context.startActivity(intent)
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -105,6 +169,28 @@ fun HomeScreen(
                                     showThemeMenu = false
                                 }
                             )
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                                HorizontalDivider()
+                                if (canScheduleExact) {
+                                    DropdownMenuItem(
+                                        text = { Text("Exact Reminders: Active ✓") },
+                                        leadingIcon = { Icon(Icons.Filled.Alarm, contentDescription = null) },
+                                        onClick = {
+                                            showThemeMenu = false
+                                            openExactAlarmSettings()
+                                        }
+                                    )
+                                } else {
+                                    DropdownMenuItem(
+                                        text = { Text("Enable Exact Reminders") },
+                                        leadingIcon = { Icon(Icons.Filled.NotificationsActive, contentDescription = null) },
+                                        onClick = {
+                                            showThemeMenu = false
+                                            openExactAlarmSettings()
+                                        }
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -119,6 +205,13 @@ fun HomeScreen(
         }
     ) { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues).fillMaxSize()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !canScheduleExact && !isBannerDismissed) {
+                ExactAlarmBanner(
+                    onEnable = openExactAlarmSettings,
+                    onDismiss = { isBannerDismissed = true }
+                )
+            }
+
             TabRow(selectedTabIndex = selectedTabIndex) {
                 Tab(
                     selected = selectedTabIndex == 0,
@@ -342,3 +435,68 @@ fun EmptyState(modifier: Modifier = Modifier, onAddClick: () -> Unit, isActiveTa
         }
     }
 }
+
+@Composable
+private fun ExactAlarmBanner(
+    onEnable: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        ),
+        shape = MaterialTheme.shapes.medium
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.NotificationsActive,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer
+                )
+                Text(
+                    text = "Enable Exact Reminders",
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                )
+            }
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Android batches notifications up to a minute late by default. Allow exact alarms to receive reminders the moment habits are due.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.85f)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TextButton(
+                    onClick = onDismiss,
+                    modifier = Modifier.height(36.dp)
+                ) {
+                    Text("Dismiss")
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Button(
+                    onClick = onEnable,
+                    modifier = Modifier.height(36.dp),
+                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp)
+                ) {
+                    Text("Enable")
+                }
+            }
+        }
+    }
+}
+

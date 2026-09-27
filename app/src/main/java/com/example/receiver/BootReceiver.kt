@@ -1,5 +1,6 @@
 package com.example.receiver
 
+import android.app.AlarmManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -12,8 +13,10 @@ import kotlinx.coroutines.launch
 
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == Intent.ACTION_BOOT_COMPLETED || 
-            intent.action == "android.intent.action.QUICKBOOT_POWERON") {
+        val action = intent.action
+        if (action == Intent.ACTION_BOOT_COMPLETED || 
+            action == "android.intent.action.QUICKBOOT_POWERON" ||
+            action == AlarmManager.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED) {
             
             val app = context.applicationContext as IntervalsApplication
             val repository = app.repository
@@ -24,13 +27,13 @@ class BootReceiver : BroadcastReceiver() {
                 val now = System.currentTimeMillis()
                 
                 habits.forEach { habit ->
-                    if (habit.nextDueAt != null) {
+                    if (habit.isActive && habit.nextDueAt != null) {
                         if (habit.nextDueAt <= now) {
                             // Already due while phone was off
                             // We can trigger the alarm receiver manually by sending a broadcast
                             alarmScheduler.triggerMissedAlarm(habit.id)
                         } else {
-                            // Still active, reschedule
+                            // Still active, reschedule with updated permission status
                             alarmScheduler.scheduleAlarm(habit.id, habit.nextDueAt)
                         }
                     }

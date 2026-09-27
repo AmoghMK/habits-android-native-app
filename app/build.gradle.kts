@@ -18,8 +18,8 @@ android {
     applicationId = "com.aistudio.intervals.bxpqwa"
     minSdk = 24
     targetSdk = 36
-    versionCode = 2
-    versionName = "2.0"
+    versionCode = 1
+    versionName = "1.0.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -44,6 +44,9 @@ android {
     release {
       isCrunchPngs = false
       isMinifyEnabled = false
+      ndk {
+        debugSymbolLevel = "FULL"
+      }
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
       signingConfig = signingConfigs.getByName("release")
     }
